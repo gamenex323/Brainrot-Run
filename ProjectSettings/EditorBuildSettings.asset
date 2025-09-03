@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/GameplayNewUI+Env.unity
+    guid: a2ad765c851475f48849a3171320b17b
+  - enabled: 0
+    path: Assets/Scenes/GameplayNewUI+EnvRemovingExtraObjects.unity
+    guid: 1c6d71321cf471b479195860fb96c5ca
+  m_configObjects: {}
