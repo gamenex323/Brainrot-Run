@@ -13,7 +13,8 @@ public class CharacterSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!instance == null) instance = this;   
+        if(!instance == null) instance = this;
+        SetCharacterUI();
     }
 
     public void OnRightClick()
@@ -41,6 +42,16 @@ public class CharacterSelection : MonoBehaviour
     {
         characterName.text = characterInfos[currentCharacter].name;
         characterAvatar.sprite = characterInfos[currentCharacter].avatar;
+        FindObjectOfType<GlobalController>().racerPrefab = characterInfos[currentCharacter].characterPrefab;
+    }
+
+    public void ActiveSelection()
+    {
+        Invoke(nameof(PanelOnWithDelay),1f);
+    }
+    void PanelOnWithDelay()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 }
 [System.Serializable]
@@ -48,5 +59,6 @@ public class CharacterInfo
 {
     public string name;
     public Sprite avatar;
+    public GameObject characterPrefab;
 
 }
