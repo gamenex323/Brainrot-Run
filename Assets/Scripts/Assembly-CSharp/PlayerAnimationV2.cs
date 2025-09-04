@@ -204,6 +204,165 @@ public class PlayerAnimationV2 : MonoBehaviour
     private bool uiRightPressed;
 
 
+
+    #region HurdleRace
+    private Vector2 touchStartPosition;
+    private float minSwipeDistance = 50f; // Minimum swipe distance in pixels
+    private bool swipeDetectedThisFrame;
+
+    private void Update()
+    {
+        DetectSwipes();
+    }
+
+    private void DetectSwipes()
+    {
+        swipeDetectedThisFrame = false;
+
+        // Mouse input for testing in editor
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
+        {
+            touchStartPosition = Input.mousePosition;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            Vector2 swipeDelta = (Vector2)Input.mousePosition - touchStartPosition;
+            ProcessSwipe(swipeDelta);
+        }
+#endif
+
+        // Touch input for mobile devices
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    touchStartPosition = touch.position;
+                    break;
+
+                case TouchPhase.Ended:
+                    Vector2 swipeDelta = touch.position - touchStartPosition;
+                    ProcessSwipe(swipeDelta);
+                    break;
+            }
+        }
+    }
+
+    private void ProcessSwipe(Vector2 swipeDelta)
+    {
+        // Check if it's a valid swipe (minimum distance)
+        if (swipeDelta.magnitude < minSwipeDistance)
+            return;
+
+        // Normalize the swipe direction
+        swipeDelta.Normalize();
+
+        // Check for upward swipes with horizontal bias
+        if (swipeDelta.y > 0.5f) // Upward component is strong
+        {
+            if (swipeDelta.x > 0.3f) // Right swipe up
+            {
+                DebugSwipe("Right Swipe Up Detected!");
+                OnRightSwipeUp();
+            }
+            else if (swipeDelta.x < -0.3f) // Left swipe up
+            {
+                DebugSwipe("Left Swipe Up Detected!");
+                OnLeftSwipeUp();
+            }
+            else // Straight up swipe
+            {
+                DebugSwipe("Straight Up Swipe Detected!");
+                OnStraightSwipeUp();
+            }
+
+            swipeDetectedThisFrame = true;
+        }
+    }
+
+    private void DebugSwipe(string message)
+    {
+        Debug.Log($"[SWIPE DEBUG] {message} | Time: {Time.time} | Speed: {speedHoriz} | Energy: {energy}");
+
+        // Optional: Add visual feedback in the console with more details
+        Debug.Log($"[SWIPE DETAILS] Position: {transform.position} | Velocity: {rb.velocity} | Mode: {(mode == Set ? "Set" : "Run")}");
+    }
+
+    private void OnRightSwipeUp()
+    {
+        // Add your right swipe up functionality here
+        Debug.Log("Right swipe up action triggered!");
+
+        // Example: Boost right side power temporarily
+        // StartCoroutine(RightSideBoost());
+
+        // Or trigger a special right-side animation
+        // animator.SetTrigger("RightSwipeSpecial");
+    }
+
+    private void OnLeftSwipeUp()
+    {
+        // Add your left swipe up functionality here
+        Debug.Log("Left swipe up action triggered!");
+
+        // Example: Boost left side power temporarily
+        // StartCoroutine(LeftSideBoost());
+
+        // Or trigger a special left-side animation
+        // animator.SetTrigger("LeftSwipeSpecial");
+    }
+
+    private void OnStraightSwipeUp()
+    {
+        // Add straight up swipe functionality
+        Debug.Log("Straight up swipe action triggered!");
+
+        // Example: Jump or special move
+        if (mode == Run && (rightFootScript.groundContact || leftFootScript.groundContact))
+        {
+            // Trigger jump or hurdle
+            hurdleWeight = 1f;
+            if (rb != null && Mathf.Abs(rb.velocity.y) < 0.01f)
+            {
+                rb.AddForce(Vector3.up * jumpForce * 1.2f, ForceMode.VelocityChange);
+            }
+        }
+    }
+
+    // Example coroutine for swipe effects
+    private IEnumerator RightSideBoost()
+    {
+        float originalPowerMod = powerMod;
+        powerMod *= 1.3f; // 30% power boost
+        Debug.Log("Right side boost activated!");
+
+        yield return new WaitForSeconds(2f);
+
+        powerMod = originalPowerMod;
+        Debug.Log("Right side boost ended.");
+    }
+
+    private IEnumerator LeftSideBoost()
+    {
+        float originalQuicknessMod = quicknessMod;
+        quicknessMod *= 1.25f; // 25% speed boost
+        Debug.Log("Left side quickness boost activated!");
+
+        yield return new WaitForSeconds(2f);
+
+        quicknessMod = originalQuicknessMod;
+        Debug.Log("Left side quickness boost ended.");
+    }
+
+    // Optional: Add swipe visualization in FixedUpdate for debugging
+
+    #endregion
+
+
+
     private void OnEnable()
     {
         TapButton.btnClickedEvent += HandleUIButton;
@@ -336,6 +495,13 @@ public class PlayerAnimationV2 : MonoBehaviour
 
     public void FixedUpdate()
     {
+
+
+
+
+
+
+
         animator.SetBool(AnimHashes.groundContact, rightFootScript.groundContact || leftFootScript.groundContact);
 
         dTime = 1f / 90f;
@@ -361,6 +527,43 @@ public class PlayerAnimationV2 : MonoBehaviour
         speedHoriz_lastFrame = speedHoriz;
         rightFootPos_lastFrame = rightFoot.position;
         leftFootPos_lastFrame = leftFoot.position;
+
+
+
+
+
+
+        // Your existing FixedUpdate code...
+        animator.SetBool(AnimHashes.groundContact, rightFootScript.groundContact || leftFootScript.groundContact);
+
+        dTime = 1f / 90f;
+        speedHoriz = new Vector3(rb.velocity.x, 0f, rb.velocity.z).magnitude;
+
+        if (mode == Set)
+        {
+            setPositionMode();
+        }
+        else if (mode == Run)
+        {
+            runMode();
+        }
+
+        adjustRotation();
+        updateLayerWeights();
+        applyFriction();
+        applyPowerModifiers();
+        applySpeedModifiers();
+        velocityLastFrame = rb.velocity;
+        velocityLastFrame_relative = gyro.transform.InverseTransformDirection(rb.velocity);
+        speedHoriz_lastFrame = speedHoriz;
+        rightFootPos_lastFrame = rightFoot.position;
+        leftFootPos_lastFrame = leftFoot.position;
+
+        // Reset swipe flag for next frame
+        if (swipeDetectedThisFrame)
+        {
+            swipeDetectedThisFrame = false;
+        }
     }
 
     private void runMode()
@@ -390,7 +593,7 @@ public class PlayerAnimationV2 : MonoBehaviour
         }
 
 
-            torsoAngle = root.rotation.eulerAngles.x;
+        torsoAngle = root.rotation.eulerAngles.x;
 
         quickness = quickness_base * speedHoriz * 0.25f;
         if (quickness > quickness_base)
@@ -565,44 +768,44 @@ public class PlayerAnimationV2 : MonoBehaviour
                 animator.SetBool(AnimHashes.Input, false);
             }
 
-           
-                // --- Normal right foot logic ---
-                if (rightInput)
-                {
-                    rightFootScript.input = true;
-                    animator.SetBool(AnimHashes.Right, true);
 
-                    if (!launchFlag)
-                    {
-                        StartCoroutine(launch(leadLeg == 1));
-                        launchFlag = true;
-                    }
-                }
-                else
-                {
-                    rightFootScript.input = false;
-                    animator.SetBool(AnimHashes.Right, false);
-                }
+            // --- Normal right foot logic ---
+            if (rightInput)
+            {
+                rightFootScript.input = true;
+                animator.SetBool(AnimHashes.Right, true);
 
-                // --- Normal left foot logic ---
-                if (leftInput)
+                if (!launchFlag)
                 {
-                    leftFootScript.input = true;
-                    animator.SetBool(AnimHashes.Left, true);
-
-                    if (!launchFlag)
-                    {
-                        StartCoroutine(launch(leadLeg == 0));
-                        launchFlag = true;
-                    }
-                }
-                else
-                {
-                    leftFootScript.input = false;
-                    animator.SetBool(AnimHashes.Left, false);
+                    StartCoroutine(launch(leadLeg == 1));
+                    launchFlag = true;
                 }
             }
-        
+            else
+            {
+                rightFootScript.input = false;
+                animator.SetBool(AnimHashes.Right, false);
+            }
+
+            // --- Normal left foot logic ---
+            if (leftInput)
+            {
+                leftFootScript.input = true;
+                animator.SetBool(AnimHashes.Left, true);
+
+                if (!launchFlag)
+                {
+                    StartCoroutine(launch(leadLeg == 0));
+                    launchFlag = true;
+                }
+            }
+            else
+            {
+                leftFootScript.input = false;
+                animator.SetBool(AnimHashes.Left, false);
+            }
+        }
+
     }
 
 
@@ -897,7 +1100,7 @@ public class PlayerAnimationV2 : MonoBehaviour
         rb.velocity = velocity;
     }
 
-   
+
     private void updateLayerWeights()
     {
         driveWeight = leanWeight * (1f - speedHoriz / (attributes.TRANSITION_PIVOT_SPEED * 0.1425f));
@@ -943,7 +1146,7 @@ public class PlayerAnimationV2 : MonoBehaviour
         if (Mathf.Approximately(hurdleWeight, 1f))
         {
 
-            
+
             if (rb != null && Mathf.Abs(rb.velocity.y) < 0.01f) // only jump if not already moving vertically
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
@@ -958,7 +1161,7 @@ public class PlayerAnimationV2 : MonoBehaviour
             animator.SetLayerWeight(RightArmDRLayer, 0f);
             animator.SetLayerWeight(LeftArmDRLayer, 0f);
 
-       
+
 
             animator.SetLayerWeight(TosoUprightLayer, 0f); //torso drive
             animator.SetLayerWeight(TorsoDriveLayer, 1f); //torso drive
