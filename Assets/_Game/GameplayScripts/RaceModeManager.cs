@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RaceModeManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static RaceModeManager Instance;
+    public GameObject hurdle;
+    public Modes activeMode;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        Instance = this;
+    }
+    public void EnableMode()
+    {
+        if (activeMode == Modes.Hurdles)
+        {
+            hurdle.SetActive(true);
+        }
+        else {
+            hurdle.SetActive(false);
+        }
     }
 }
