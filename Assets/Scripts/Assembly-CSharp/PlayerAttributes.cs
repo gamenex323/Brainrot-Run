@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class PlayerAttributes : MonoBehaviour
 {
-	public ClothingManager clothingManager;
+    public Animator animator;
+
+    public RuntimeAnimatorController[] animatorControllers;
+
+    public ClothingManager clothingManager;
 
 	public static int DEFAULT_PATH_LENGTH = 9000;
 
@@ -198,9 +202,7 @@ public class PlayerAttributes : MonoBehaviour
 
 	public float CRUISE;
 
-	public Animator animator;
 
-	public RuntimeAnimatorController[] animatorControllers;
 
 	public int animatorNum;
 

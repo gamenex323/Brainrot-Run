@@ -9846,6 +9846,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0c2ac72670c6d6315b958ae9c25424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 95095686404030217}
+  animatorControllers:
+  - {fileID: 9100000, guid: d956fa797781ec24d938595b4d72fff5, type: 2}
+  - {fileID: 9100000, guid: d956fa797781ec24d938595b4d72fff5, type: 2}
+  - {fileID: 9100000, guid: d956fa797781ec24d938595b4d72fff5, type: 2}
+  - {fileID: 9100000, guid: d956fa797781ec24d938595b4d72fff5, type: 2}
   clothingManager: {fileID: 114066297219754458}
   id: 
   racerName: 
@@ -9940,12 +9946,6 @@ MonoBehaviour:
   LAUNCH_POWER: 0
   CURVE_POWER: 0
   CRUISE: 0
-  animator: {fileID: 95095686404030217}
-  animatorControllers:
-  - {fileID: 9100000, guid: d956fa797781ec24d938595b4d72fff5, type: 2}
-  - {fileID: 9100000, guid: 90cf7dd7af3106f47b45f2a34f7731b7, type: 2}
-  - {fileID: 9100000, guid: 3757668c63f006746ac656f14d7ff567, type: 2}
-  - {fileID: 9100000, guid: 33bba976c52f1c648a067e5e93a81546, type: 2}
   animatorNum: 0
   leadLeg: 0
   armSpeedFlexL: 0

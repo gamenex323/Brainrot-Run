@@ -204,165 +204,6 @@ public class PlayerAnimationV2 : MonoBehaviour
     private bool uiRightPressed;
 
 
-
-    #region HurdleRace
-    private Vector2 touchStartPosition;
-    private float minSwipeDistance = 50f; // Minimum swipe distance in pixels
-    private bool swipeDetectedThisFrame;
-
-    private void Update()
-    {
-        DetectSwipes();
-    }
-
-    private void DetectSwipes()
-    {
-        swipeDetectedThisFrame = false;
-
-        // Mouse input for testing in editor
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            touchStartPosition = Input.mousePosition;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            Vector2 swipeDelta = (Vector2)Input.mousePosition - touchStartPosition;
-            ProcessSwipe(swipeDelta);
-        }
-#endif
-
-        // Touch input for mobile devices
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-                    touchStartPosition = touch.position;
-                    break;
-
-                case TouchPhase.Ended:
-                    Vector2 swipeDelta = touch.position - touchStartPosition;
-                    ProcessSwipe(swipeDelta);
-                    break;
-            }
-        }
-    }
-
-    private void ProcessSwipe(Vector2 swipeDelta)
-    {
-        // Check if it's a valid swipe (minimum distance)
-        if (swipeDelta.magnitude < minSwipeDistance)
-            return;
-
-        // Normalize the swipe direction
-        swipeDelta.Normalize();
-
-        // Check for upward swipes with horizontal bias
-        if (swipeDelta.y > 0.5f) // Upward component is strong
-        {
-            if (swipeDelta.x > 0.3f) // Right swipe up
-            {
-                DebugSwipe("Right Swipe Up Detected!");
-                OnRightSwipeUp();
-            }
-            else if (swipeDelta.x < -0.3f) // Left swipe up
-            {
-                DebugSwipe("Left Swipe Up Detected!");
-                OnLeftSwipeUp();
-            }
-            else // Straight up swipe
-            {
-                DebugSwipe("Straight Up Swipe Detected!");
-                OnStraightSwipeUp();
-            }
-
-            swipeDetectedThisFrame = true;
-        }
-    }
-
-    private void DebugSwipe(string message)
-    {
-        Debug.Log($"[SWIPE DEBUG] {message} | Time: {Time.time} | Speed: {speedHoriz} | Energy: {energy}");
-
-        // Optional: Add visual feedback in the console with more details
-        Debug.Log($"[SWIPE DETAILS] Position: {transform.position} | Velocity: {rb.velocity} | Mode: {(mode == Set ? "Set" : "Run")}");
-    }
-
-    private void OnRightSwipeUp()
-    {
-        // Add your right swipe up functionality here
-        Debug.Log("Right swipe up action triggered!");
-
-        // Example: Boost right side power temporarily
-        // StartCoroutine(RightSideBoost());
-
-        // Or trigger a special right-side animation
-        // animator.SetTrigger("RightSwipeSpecial");
-    }
-
-    private void OnLeftSwipeUp()
-    {
-        // Add your left swipe up functionality here
-        Debug.Log("Left swipe up action triggered!");
-
-        // Example: Boost left side power temporarily
-        // StartCoroutine(LeftSideBoost());
-
-        // Or trigger a special left-side animation
-        // animator.SetTrigger("LeftSwipeSpecial");
-    }
-
-    private void OnStraightSwipeUp()
-    {
-        // Add straight up swipe functionality
-        Debug.Log("Straight up swipe action triggered!");
-
-        // Example: Jump or special move
-        if (mode == Run && (rightFootScript.groundContact || leftFootScript.groundContact))
-        {
-            // Trigger jump or hurdle
-            hurdleWeight = 1f;
-            if (rb != null && Mathf.Abs(rb.velocity.y) < 0.01f)
-            {
-                rb.AddForce(Vector3.up * jumpForce * 1.2f, ForceMode.VelocityChange);
-            }
-        }
-    }
-
-    // Example coroutine for swipe effects
-    private IEnumerator RightSideBoost()
-    {
-        float originalPowerMod = powerMod;
-        powerMod *= 1.3f; // 30% power boost
-        Debug.Log("Right side boost activated!");
-
-        yield return new WaitForSeconds(2f);
-
-        powerMod = originalPowerMod;
-        Debug.Log("Right side boost ended.");
-    }
-
-    private IEnumerator LeftSideBoost()
-    {
-        float originalQuicknessMod = quicknessMod;
-        quicknessMod *= 1.25f; // 25% speed boost
-        Debug.Log("Left side quickness boost activated!");
-
-        yield return new WaitForSeconds(2f);
-
-        quicknessMod = originalQuicknessMod;
-        Debug.Log("Left side quickness boost ended.");
-    }
-
-    // Optional: Add swipe visualization in FixedUpdate for debugging
-
-    #endregion
-
-
-
     private void OnEnable()
     {
         TapButton.btnClickedEvent += HandleUIButton;
@@ -495,13 +336,6 @@ public class PlayerAnimationV2 : MonoBehaviour
 
     public void FixedUpdate()
     {
-
-
-
-
-
-
-
         animator.SetBool(AnimHashes.groundContact, rightFootScript.groundContact || leftFootScript.groundContact);
 
         dTime = 1f / 90f;
@@ -527,43 +361,6 @@ public class PlayerAnimationV2 : MonoBehaviour
         speedHoriz_lastFrame = speedHoriz;
         rightFootPos_lastFrame = rightFoot.position;
         leftFootPos_lastFrame = leftFoot.position;
-
-
-
-
-
-
-        // Your existing FixedUpdate code...
-        animator.SetBool(AnimHashes.groundContact, rightFootScript.groundContact || leftFootScript.groundContact);
-
-        dTime = 1f / 90f;
-        speedHoriz = new Vector3(rb.velocity.x, 0f, rb.velocity.z).magnitude;
-
-        if (mode == Set)
-        {
-            setPositionMode();
-        }
-        else if (mode == Run)
-        {
-            runMode();
-        }
-
-        adjustRotation();
-        updateLayerWeights();
-        applyFriction();
-        applyPowerModifiers();
-        applySpeedModifiers();
-        velocityLastFrame = rb.velocity;
-        velocityLastFrame_relative = gyro.transform.InverseTransformDirection(rb.velocity);
-        speedHoriz_lastFrame = speedHoriz;
-        rightFootPos_lastFrame = rightFoot.position;
-        leftFootPos_lastFrame = leftFoot.position;
-
-        // Reset swipe flag for next frame
-        if (swipeDetectedThisFrame)
-        {
-            swipeDetectedThisFrame = false;
-        }
     }
 
     private void runMode()
@@ -664,8 +461,9 @@ public class PlayerAnimationV2 : MonoBehaviour
         setPositionWeight = 1f;
         runWeight = 0f;
     }
+    private float hurdleWeightRight = 0f;
+    private float hurdleWeightLeft = 0f;
 
-    float hurdleWeight = 0;
 
     public void readInput(int tick)
     {
@@ -684,16 +482,24 @@ public class PlayerAnimationV2 : MonoBehaviour
 #endif
 
             // Smooth fade hurdle layer in/out
-            if (Input.GetKey(KeyCode.UpArrow)) // or Input.GetButton("Jump")
+            if (Input.GetKey(KeyCode.UpArrow))
             {
-                hurdleWeight = Mathf.MoveTowards(
-                    animator.GetLayerWeight(TorsoHurdleLayer), 1f, dTime * 5f);
+                hurdleWeightRight = Mathf.MoveTowards(hurdleWeightRight, 1f, dTime * 5f);
             }
             else
             {
-                hurdleWeight = Mathf.MoveTowards(
-                    animator.GetLayerWeight(TorsoHurdleLayer), 0f, dTime * 5f);
+                hurdleWeightRight = Mathf.MoveTowards(hurdleWeightRight, 0f, dTime * 5f);
             }
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 1f, dTime * 5f);
+            }
+            else
+            {
+                hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 0f, dTime * 5f);
+            }
+
         }
         else if (racerType == RacerType.Ghost || racerType == RacerType.Bot)
         {
@@ -1103,90 +909,73 @@ public class PlayerAnimationV2 : MonoBehaviour
 
     private void updateLayerWeights()
     {
+        // Drive weight based on leaning and speed
         driveWeight = leanWeight * (1f - speedHoriz / (attributes.TRANSITION_PIVOT_SPEED * 0.1425f));
         if (driveWeight > 0.8f)
         {
             driveWeight = 0.8f;
         }
+
+        // Cruise weight calculation
         if (speedHoriz > speedHoriz_lastFrame)
         {
             cruiseWeight -= 0.7f * dTime;
-            if (cruiseWeight < 0f)
-            {
-                cruiseWeight = 0f;
-            }
+            if (cruiseWeight < 0f) cruiseWeight = 0f;
         }
         else if (speedHoriz > 15f)
         {
             cruiseWeight += cruise * dTime;
         }
+
         if (speedHoriz < 10f)
         {
             cruiseWeight *= speedHoriz / 10f;
         }
+
         cruiseWeight *= 313f / torsoAngle;
         if (cruiseWeight > 1f)
         {
             cruiseWeight = 1f;
         }
 
-        //    //Debug.Log("speedHor: " + speedHoriz + " leftInput: " + leftInput + " rightInput: " + rightInput);
-        //Debug.Log($"(1f - driveWeight)*runWeight) --  driveWeight: {driveWeight}, runWeight: {runWeight}");
-
+        // --- Set global animator layers ---
         animator.SetLayerWeight(CruiseLayer, cruiseWeight * runWeight);
         animator.SetLayerWeight(SetPositionLayer, setPositionWeight);
 
+        // Set independent hurdle weights
+        animator.SetLayerWeight(RightLegHurdleLayer, hurdleWeightRight);
+        animator.SetLayerWeight(LeftLegHurdleLayer, hurdleWeightLeft);
+        animator.SetLayerWeight(RightArmHurdleLayer, hurdleWeightRight);
+        animator.SetLayerWeight(LeftArmHurdleLayer, hurdleWeightLeft);
 
-        animator.SetLayerWeight(TorsoHurdleLayer, hurdleWeight);
-        animator.SetLayerWeight(RightLegHurdleLayer, hurdleWeight);
-        animator.SetLayerWeight(LeftLegHurdleLayer, hurdleWeight);
-        animator.SetLayerWeight(RightArmHurdleLayer, hurdleWeight);
-        animator.SetLayerWeight(LeftArmHurdleLayer, hurdleWeight);
+        // Torso hurdle layer is active if either leg is hurdling
+        float torsoHurdleCombined = Mathf.Max(hurdleWeightLeft, hurdleWeightRight);
+        animator.SetLayerWeight(TorsoHurdleLayer, torsoHurdleCombined);
 
-        if (Mathf.Approximately(hurdleWeight, 1f))
-        {
+        // Hurdle jump logic
+        //if (torsoHurdleCombined >= 1f && rb != null && Mathf.Abs(rb.velocity.y) < 0.01f)
+        //{
+        //    rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+        //}
 
+        // Standard leg/arm upright + drive logic
+        animator.SetLayerWeight(TosoUprightLayer, (1f - leanWeight) * runWeight);
+        animator.SetLayerWeight(TorsoDriveLayer, leanWeight * Mathf.Max(runWeight));
 
-            if (rb != null && Mathf.Abs(rb.velocity.y) < 0.01f) // only jump if not already moving vertically
-            {
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
-            }
+        animator.SetLayerWeight(RightLegURLayer, (1f - driveWeight) * runWeight);
+        animator.SetLayerWeight(LeftLegURLayer, (1f - driveWeight) * runWeight);
+        animator.SetLayerWeight(RightLegDRLayer, driveWeight * runWeight);
+        animator.SetLayerWeight(LeftLegDRLayer, driveWeight * runWeight);
 
-            animator.SetLayerWeight(RightLegURLayer, 0f);
-            animator.SetLayerWeight(LeftLegURLayer, 0f);
-            animator.SetLayerWeight(RightLegDRLayer, 0f);
-            animator.SetLayerWeight(LeftLegDRLayer, 0f);
-            animator.SetLayerWeight(RightArmURLayer, 0f);
-            animator.SetLayerWeight(LeftArmURLayer, 0f);
-            animator.SetLayerWeight(RightArmDRLayer, 0f);
-            animator.SetLayerWeight(LeftArmDRLayer, 0f);
+        animator.SetLayerWeight(RightArmURLayer, (1f - driveWeight) * runWeight);
+        animator.SetLayerWeight(LeftArmURLayer, (1f - driveWeight) * runWeight);
+        animator.SetLayerWeight(RightArmDRLayer, driveWeight * runWeight);
+        animator.SetLayerWeight(LeftArmDRLayer, driveWeight * runWeight);
 
-
-
-            animator.SetLayerWeight(TosoUprightLayer, 0f); //torso drive
-            animator.SetLayerWeight(TorsoDriveLayer, 1f); //torso drive
-
-            //torsoAngle = 20;
-        }
-        else
-        {
-
-            animator.SetLayerWeight(TosoUprightLayer, (1f - leanWeight) * runWeight);
-
-            animator.SetLayerWeight(TorsoDriveLayer, leanWeight * Mathf.Max(runWeight));
-            animator.SetLayerWeight(RightLegURLayer, (1f - driveWeight) * runWeight);
-            animator.SetLayerWeight(LeftLegURLayer, (1f - driveWeight) * runWeight);
-            animator.SetLayerWeight(RightLegDRLayer, driveWeight * runWeight);
-            animator.SetLayerWeight(LeftLegDRLayer, driveWeight * runWeight);
-            animator.SetLayerWeight(RightArmURLayer, (1f - driveWeight) * runWeight);
-            animator.SetLayerWeight(LeftArmURLayer, (1f - driveWeight) * runWeight);
-            animator.SetLayerWeight(RightArmDRLayer, driveWeight * runWeight);
-            animator.SetLayerWeight(LeftArmDRLayer, driveWeight * runWeight);
-
-        }
-
+        // Speed parameter (used by blend trees or state machines)
         animator.SetFloat(AnimHashes.HorizSpeed, speedHoriz / 28f);
     }
+
 
     //private void updateLayerWeights()
     //{
