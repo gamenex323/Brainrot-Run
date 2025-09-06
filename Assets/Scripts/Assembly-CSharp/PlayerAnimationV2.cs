@@ -339,6 +339,10 @@ public class PlayerAnimationV2 : MonoBehaviour
         {
             relayObject.SetActive(true);
         }
+        else
+        {
+            relayObject.SetActive(false);
+        }
     }
 
     public void FixedUpdate()
