@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimationV2 : MonoBehaviour
 {
+    public GameObject relayObject;
+
     public GameObject gyro;
 
     public Transform hudIndicatorT;
@@ -332,6 +334,11 @@ public class PlayerAnimationV2 : MonoBehaviour
             racerType = RacerType.Ghost;
         else if (CompareTag("Bot"))
             racerType = RacerType.Bot;
+
+        if(RaceModeManager.Instance.activeMode == Modes.Relays)
+        {
+            relayObject.SetActive(true);
+        }
     }
 
     public void FixedUpdate()
@@ -454,7 +461,9 @@ public class PlayerAnimationV2 : MonoBehaviour
         }
 
     }
-
+    private float minSwipeDist = 50f; // You can tweak this value
+    private bool swipeDetected = false;
+    private Vector2 touchStartPos;
     public void setPositionMode()
     {
         animator.SetBool(AnimHashes.UpInSet, upInSet);
@@ -495,7 +504,7 @@ public class PlayerAnimationV2 : MonoBehaviour
             {
                 hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 0f, dTime * 5f);
             }
-#else
+
         rightInput = uiRightPressed;
         leftInput = uiLeftPressed;
 
