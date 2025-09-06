@@ -8,6 +8,7 @@ public class RaceModeManager : MonoBehaviour
     public static RaceModeManager Instance;
     public GameObject hurdle;
     public Modes activeMode;
+    public Camera cameraForHurdleCanvas;
 
     private void Start()
     {

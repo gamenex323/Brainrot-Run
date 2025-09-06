@@ -476,12 +476,8 @@ public class PlayerAnimationV2 : MonoBehaviour
             print("Right Arrow");
             rightInput = Input.GetKey(KeyCode.RightArrow);
             leftInput = Input.GetKey(KeyCode.LeftArrow);
-#else
-            rightInput = uiRightPressed;
-            leftInput = uiLeftPressed;
-#endif
 
-            // Smooth fade hurdle layer in/out
+            // For testing in editor
             if (Input.GetKey(KeyCode.UpArrow))
             {
                 hurdleWeightRight = Mathf.MoveTowards(hurdleWeightRight, 1f, dTime * 5f);
@@ -499,7 +495,71 @@ public class PlayerAnimationV2 : MonoBehaviour
             {
                 hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 0f, dTime * 5f);
             }
+#else
+        rightInput = uiRightPressed;
+        leftInput = uiLeftPressed;
 
+        // Swipe detection
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    swipeDetected = false;
+                    touchStartPos = touch.position;
+                    break;
+
+                case TouchPhase.Moved:
+                    if (!swipeDetected)
+                    {
+                        Vector2 delta = touch.position - touchStartPos;
+
+                        if (Mathf.Abs(delta.x) > minSwipeDist && Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+                        {
+                            swipeDetected = true;
+
+                            if (touchStartPos.x < Screen.width / 2)
+                            {
+                                // Swipe on left half
+                                if (delta.x > 0)
+                                {
+                                    // Right swipe on left screen - hurdle right
+                                    hurdleWeightRight = Mathf.MoveTowards(hurdleWeightRight, 1f, dTime * 5f);
+                                }
+                                else
+                                {
+                                    // Left swipe on left screen - hurdle left
+                                    hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 1f, dTime * 5f);
+                                }
+                            }
+                            else
+                            {
+                                // Swipe on right half
+                                if (delta.x > 0)
+                                {
+                                    // Right swipe on right screen - hurdle right
+                                    hurdleWeightRight = Mathf.MoveTowards(hurdleWeightRight, 1f, dTime * 5f);
+                                }
+                                else
+                                {
+                                    // Left swipe on right screen - hurdle left
+                                    hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 1f, dTime * 5f);
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case TouchPhase.Ended:
+                    // Reset hurdle weights when finger lifts
+                    hurdleWeightRight = Mathf.MoveTowards(hurdleWeightRight, 0f, dTime * 5f);
+                    hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 0f, dTime * 5f);
+                    break;
+            }
+        }
+#endif
         }
         else if (racerType == RacerType.Ghost || racerType == RacerType.Bot)
         {

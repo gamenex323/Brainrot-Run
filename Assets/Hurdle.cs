@@ -5,14 +5,24 @@ using UnityEngine;
 
 public class Hurdle : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision != null)
+        if (other != null)
         {
-            Debug.Log("Collide With: " + collision.gameObject.name);
-            GetComponent<DOTweenAnimation>().DOPlay();
-            GetComponent<BoxCollider>().enabled = false;
-
+            if (other.gameObject.tag == "Bot")
+            {
+                Debug.Log("Collide With: " + other.gameObject.name + GetComponent<DOTweenAnimation>());
+                GetComponent<Rigidbody>().AddForce(other.transform.position, ForceMode.Impulse);
+                GetComponent<BoxCollider>().enabled = false;
+            }
+            if (other.gameObject.tag == "Player")
+            {
+                Debug.Log("Collide With Player: " + other.gameObject.name + GetComponent<DOTweenAnimation>());
+                DOVirtual.DelayedCall(0.5f, () =>
+                {
+                    GetComponent<BoxCollider>().enabled = false;
+                });
+            }
         }
     }
 }

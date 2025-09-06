@@ -51,6 +51,7 @@ public class CharacterSelection : MonoBehaviour
     }
     void PanelOnWithDelay()
     {
+        Debug.Log("Character Selection On", gameObject);
         transform.GetChild(0).gameObject.SetActive(true);
     }
 }
