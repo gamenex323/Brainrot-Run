@@ -6202,6 +6202,7 @@ GameObject:
   - component: {fileID: 10063}
   - component: {fileID: 10062}
   - component: {fileID: 10064}
+  - component: {fileID: 10067}
   m_Layer: 5
   m_Name: Exit Button
   m_TagString: Button
@@ -167794,6 +167795,19 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: --
+--- !u!114 &10067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2011b92d08f05e4d89abf317df5b8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelToFalse: {fileID: 1707513343}
 --- !u!114 &10068
 MonoBehaviour:
   m_ObjectHideFlags: 0
