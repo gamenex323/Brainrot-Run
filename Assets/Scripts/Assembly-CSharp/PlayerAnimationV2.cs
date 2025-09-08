@@ -366,6 +366,7 @@ public class PlayerAnimationV2 : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             GameObject character =  Instantiate(relayCharacter);
+            RaceModeManager.Instance.relayCharacters.Add(character);
             character.transform.position = new Vector3(transform.localPosition.x, 0f,
                 relayLegSpawn);
             character.GetComponent<RelayCharacter>().legNumber = i + 1;
@@ -373,8 +374,6 @@ public class PlayerAnimationV2 : MonoBehaviour
             relayLegSpawn += relayLegsDistance;
             character.name = gameObject.name;
         }
-           
-
     }
     public void FixedUpdate()
     {

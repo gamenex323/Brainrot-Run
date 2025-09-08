@@ -86,6 +86,9 @@ public class HurdleDetector : MonoBehaviour
             }
         }
 
-
+        if (RaceModeManager.Instance.activeMode == Modes.Sprint)
+        {
+            metersText.gameObject.SetActive(false);
+        }
     }
 }

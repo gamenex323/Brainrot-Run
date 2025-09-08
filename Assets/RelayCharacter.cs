@@ -9,12 +9,10 @@ public class RelayCharacter : MonoBehaviour
     public bool isPlayer;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger With", other.gameObject);
         if (other.GetComponentInParent<PlayerAnimationV2>())
         {
             if (other.GetComponentInParent<PlayerAnimationV2>().gameObject.name == gameObject.name)
             {
-                Debug.Log("Trigger With", other.gameObject);
                 other.GetComponentInParent<PlayerAnimationV2>().gameObject.
                     GetComponent<Rigidbody>().AddForce(Vector3.forward * 2f, ForceMode.Impulse);
                 GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;

@@ -161276,6 +161276,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 805983550}
+        m_TargetAssemblyTypeName: RaceModeManager, Assembly-CSharp
+        m_MethodName: DestroyAllRelayCharacters
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &9889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167642,6 +167654,18 @@ MonoBehaviour:
       - m_Target: {fileID: 10104}
         m_TargetAssemblyTypeName: RaceManager, Assembly-CSharp
         m_MethodName: quitRace
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 805983550}
+        m_TargetAssemblyTypeName: RaceModeManager, Assembly-CSharp
+        m_MethodName: DestroyAllRelayCharacters
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -177721,6 +177745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hurdle: {fileID: 1133764354380110, guid: 4b174ac41a3e579498bc726a194e68e5, type: 3}
   hurdleSpawnPosition: {fileID: 1287203047}
+  relayCharacters: []
   relayHeading: {fileID: 196538333}
   legText: {fileID: 1270865082}
   activeMode: 0
@@ -185976,7 +186001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -186004,6 +186029,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
@@ -186039,6 +186068,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 805983550}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_Target
+      value: 
+      objectReference: {fileID: 805983550}
+    - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -186064,6 +186097,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
@@ -186099,11 +186136,19 @@ PrefabInstance:
       value: EnableMode
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_MethodName
+      value: DestroyAllRelayCharacters
+      objectReference: {fileID: 0}
+    - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_TargetAssemblyTypeName
+      value: RaceModeManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_TargetAssemblyTypeName
       value: RaceModeManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
@@ -186132,6 +186177,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6596786477875171006, guid: 4b4b1001d5771a1418127dd86ff2b84a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[8].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
