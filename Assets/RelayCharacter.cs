@@ -14,7 +14,9 @@ public class RelayCharacter : MonoBehaviour
             if (other.GetComponentInParent<PlayerAnimationV2>().gameObject.name == gameObject.name)
             {
                 other.GetComponentInParent<PlayerAnimationV2>().gameObject.
-                    GetComponent<Rigidbody>().AddForce(Vector3.forward * 2f, ForceMode.Impulse);
+                    GetComponent<Rigidbody>()
+                    .AddForce(Vector3.forward * 10f, ForceMode.VelocityChange);
+
                 GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 GetComponent<Rigidbody>().AddForce(Vector3.right * 50f, ForceMode.Impulse);
                 if (isPlayer)
