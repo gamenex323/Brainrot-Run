@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,15 +6,11 @@ public class HurdleDetector : MonoBehaviour
 {
     public Transform rayOrigin;            // The origin point of the ray
     public float rayDistance = 10f;        // Distance the ray should travel
-    public LayerMask layerMask;            // Optional: filter by layer
+    public LayerMask hurdleLayerMask;            // Optional: filter by layer
+    public LayerMask relayLayerMask;
     public Vector3 rayDirection = Vector3.forward;
-    public Text metersText;
-    public Canvas canvas;
+    public TextMeshPro metersText;
 
-    private void Start()
-    {
-        canvas.worldCamera = RaceModeManager.Instance.cameraForHurdleCanvas;
-    }
     void Update()
     {
         if (rayOrigin == null)
@@ -25,34 +22,70 @@ public class HurdleDetector : MonoBehaviour
         // Cast a ray from the origin in the given direction
         Ray ray = new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayDirection));
         RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, rayDistance, layerMask, QueryTriggerInteraction.Collide))
+        if(RaceModeManager.Instance.activeMode == Modes.Hurdles)
         {
-
-            
-            if (GetComponentInParent<PlayerAnimationV2>().isPlayer)
+            if (Physics.Raycast(ray, out hit, rayDistance, hurdleLayerMask, QueryTriggerInteraction.Collide))
             {
-                Debug.Log("Distance to hurdle: " + hit.distance.ToString("F2") + " meters");
-                if (hit.distance < 10f && hit.distance > 0)
+
+
+                if (GetComponentInParent<PlayerAnimationV2>().isPlayer)
                 {
-                    canvas.gameObject.SetActive(true);
-                    metersText.text = "Hurdle " + hit.distance.ToString("F2");
-                }
-                else
-                {
-                    canvas.gameObject.SetActive(false);
+                    Debug.Log("Distance to hurdle: " + hit.distance.ToString("F2") + " meters");
+                    if (hit.distance < 10f && hit.distance > 0)
+                    {
+                        metersText.gameObject.SetActive(true);
+                        metersText.text = "Hurdle In " + hit.distance.ToString("F2") + " Meters";
+                    }
+                    else
+                    {
+                        metersText.gameObject.SetActive(false);
+
+                    }
+                    Debug.DrawLine(ray.origin, hit.point, Color.green);
 
                 }
-                Debug.DrawLine(ray.origin, hit.point, Color.green);
+
+                // Optional: Draw green line to hit point
 
             }
+            else
+            {
+                metersText.gameObject.SetActive(false);
+            }
+        }
 
-            // Optional: Draw green line to hit point
-           
-        }
-        else
+
+        if (RaceModeManager.Instance.activeMode == Modes.Relays)
         {
-            canvas.gameObject.SetActive(false);
+            if (Physics.Raycast(ray, out hit, rayDistance, relayLayerMask, QueryTriggerInteraction.Collide))
+            {
+
+
+                if (GetComponentInParent<PlayerAnimationV2>().isPlayer)
+                {
+                    if (hit.distance < 15f && hit.distance > 0)
+                    {
+                        metersText.gameObject.SetActive(true);
+                        metersText.text = "Next Leg In " + hit.distance.ToString("F2") + " Meters";
+                    }
+                    else
+                    {
+                        metersText.gameObject.SetActive(false);
+
+                    }
+                    Debug.DrawLine(ray.origin, hit.point, Color.green);
+
+                }
+
+                // Optional: Draw green line to hit point
+
+            }
+            else
+            {
+                metersText.gameObject.SetActive(false);
+            }
         }
+
+
     }
 }

@@ -3,13 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RaceModeManager : MonoBehaviour
 {
     public static RaceModeManager Instance;
+
     public GameObject hurdle;
     private GameObject hurdleExist;
     public Transform hurdleSpawnPosition;
+
+    public GameObject relayHeading;
+    public Text legText;
     public Modes activeMode;
     public Camera cameraForHurdleCanvas;
 

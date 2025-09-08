@@ -98,7 +98,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayOrigin: {fileID: 5954379768825962746}
   rayDistance: 100
-  layerMask:
+  hurdleLayerMask:
     serializedVersion: 2
     m_Bits: 8
+  relayLayerMask:
+    serializedVersion: 2
+    m_Bits: 131072
   rayDirection: {x: 0, y: 0, z: 1}
+  metersText: {fileID: 0}

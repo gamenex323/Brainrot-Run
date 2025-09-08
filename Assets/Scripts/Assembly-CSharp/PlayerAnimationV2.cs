@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class PlayerAnimationV2 : MonoBehaviour
 {
     public GameObject relayObject;
+
+    public GameObject relayCharacter;
 
     public GameObject gyro;
 
@@ -277,6 +280,7 @@ public class PlayerAnimationV2 : MonoBehaviour
 
     }
 
+    public float localXPos;
     public void init(int raceEvent)
     {
         raceManager = globalController.raceManager;
@@ -337,14 +341,41 @@ public class PlayerAnimationV2 : MonoBehaviour
 
         if(RaceModeManager.Instance.activeMode == Modes.Relays)
         {
+            Invoke(nameof(SpawnRelayLegs), 2f);
             relayObject.SetActive(true);
+
         }
         else
         {
             relayObject.SetActive(false);
         }
-    }
 
+
+
+
+    }
+    private bool ralayCharacterSpawned;
+    public float relayLegsDistance;
+    private float relayLegSpawn;
+    public void SpawnRelayLegs()
+    {
+        if (ralayCharacterSpawned) { return; }
+        gameObject.name = gameObject.name + transform.GetSiblingIndex();
+        ralayCharacterSpawned = true;
+        relayLegSpawn = relayLegsDistance + transform.localPosition.z;
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject character =  Instantiate(relayCharacter);
+            character.transform.position = new Vector3(transform.localPosition.x, 0f,
+                relayLegSpawn);
+            character.GetComponent<RelayCharacter>().legNumber = i + 1;
+            character.GetComponent<RelayCharacter>().isPlayer = isPlayer;
+            relayLegSpawn += relayLegsDistance;
+            character.name = gameObject.name;
+        }
+           
+
+    }
     public void FixedUpdate()
     {
         animator.SetBool(AnimHashes.groundContact, rightFootScript.groundContact || leftFootScript.groundContact);
@@ -465,7 +496,7 @@ public class PlayerAnimationV2 : MonoBehaviour
         }
 
     }
-    private float minSwipeDist = 50f; // You can tweak this value
+    private float minSwipeDist = 5f; // You can tweak this value
     private bool swipeDetected = false;
     private Vector2 touchStartPos;
     public void setPositionMode()
@@ -508,13 +539,14 @@ public class PlayerAnimationV2 : MonoBehaviour
             {
                 hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 0f, dTime * 5f);
             }
-
+#else
         rightInput = uiRightPressed;
         leftInput = uiLeftPressed;
 
         // Swipe detection
         if (Input.touchCount > 0)
         {
+                print("Touch");
             Touch touch = Input.GetTouch(0);
 
             switch (touch.phase)
@@ -528,23 +560,28 @@ public class PlayerAnimationV2 : MonoBehaviour
                     if (!swipeDetected)
                     {
                         Vector2 delta = touch.position - touchStartPos;
-
+                        print("Touch Screen X" + Mathf.Abs(delta.x) + "Touch Screen Y"
+                        + Mathf.Abs(delta.y) + "Touch Screen minSwipeDist" + minSwipeDist);
                         if (Mathf.Abs(delta.x) > minSwipeDist && Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
                         {
                             swipeDetected = true;
 
                             if (touchStartPos.x < Screen.width / 2)
                             {
-                                // Swipe on left half
-                                if (delta.x > 0)
+                                    print("Touch Screen");
+                                    // Swipe on left half
+                                    if (delta.x > 0)
                                 {
+                                        print("Swipe Right");
                                     // Right swipe on left screen - hurdle right
                                     hurdleWeightRight = Mathf.MoveTowards(hurdleWeightRight, 1f, dTime * 5f);
                                 }
                                 else
                                 {
-                                    // Left swipe on left screen - hurdle left
-                                    hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 1f, dTime * 5f);
+                                        print("Swipe Right");
+
+                                        // Left swipe on left screen - hurdle left
+                                        hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 1f, dTime * 5f);
                                 }
                             }
                             else
@@ -552,13 +589,17 @@ public class PlayerAnimationV2 : MonoBehaviour
                                 // Swipe on right half
                                 if (delta.x > 0)
                                 {
-                                    // Right swipe on right screen - hurdle right
-                                    hurdleWeightRight = Mathf.MoveTowards(hurdleWeightRight, 1f, dTime * 5f);
+                                        print("Swipe Left");
+
+                                        // Right swipe on right screen - hurdle right
+                                        hurdleWeightRight = Mathf.MoveTowards(hurdleWeightRight, 1f, dTime * 5f);
                                 }
                                 else
                                 {
-                                    // Left swipe on right screen - hurdle left
-                                    hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 1f, dTime * 5f);
+                                        print("Swipe Left");
+
+                                        // Left swipe on right screen - hurdle left
+                                        hurdleWeightLeft = Mathf.MoveTowards(hurdleWeightLeft, 1f, dTime * 5f);
                                 }
                             }
                         }
