@@ -10,16 +10,12 @@ public class RaceModeManager : MonoBehaviour
     public static RaceModeManager Instance;
 
     [Header("Hurdle Mode")]
-    [Space]
-    [Space]
     public GameObject hurdle;
     private GameObject hurdleExist;
     public Transform hurdleSpawnPosition;
     [Space]
     [Space]
     [Header("Relay Mode")]
-    [Space]
-    [Space]
     public List<GameObject> relayCharacters;
     public GameObject relayHeading;
     public Text legText;
@@ -37,7 +33,7 @@ public class RaceModeManager : MonoBehaviour
         Instance = this;
     }
 
-    public void DestroyAllRelayCharacters()
+    void DestroyAllCharacter()
     {
         for (int i = 0; i < relayCharacters.Count; i++)
         {
@@ -45,6 +41,13 @@ public class RaceModeManager : MonoBehaviour
 
         }
         relayCharacters.Clear();
+    }
+
+    public void ResetGameplay()
+    {
+        DestroyAllCharacter();
+        if(hurdleExist)
+            Destroy(hurdleExist);
     }
     public void EnableMode()
     {

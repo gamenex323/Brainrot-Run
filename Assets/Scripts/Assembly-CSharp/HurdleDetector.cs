@@ -26,8 +26,6 @@ public class HurdleDetector : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, rayDistance, hurdleLayerMask, QueryTriggerInteraction.Collide))
             {
-
-
                 if (GetComponentInParent<PlayerAnimationV2>().isPlayer)
                 {
                     Debug.Log("Distance to hurdle: " + hit.distance.ToString("F2") + " meters");
@@ -44,9 +42,7 @@ public class HurdleDetector : MonoBehaviour
                     Debug.DrawLine(ray.origin, hit.point, Color.green);
 
                 }
-
                 // Optional: Draw green line to hit point
-
             }
             else
             {
@@ -58,9 +54,7 @@ public class HurdleDetector : MonoBehaviour
         if (RaceModeManager.Instance.activeMode == Modes.Relays)
         {
             if (Physics.Raycast(ray, out hit, rayDistance, relayLayerMask, QueryTriggerInteraction.Collide))
-            {
-
-
+            { 
                 if (GetComponentInParent<PlayerAnimationV2>().isPlayer)
                 {
                     if (hit.distance < 15f && hit.distance > 0)
@@ -74,11 +68,8 @@ public class HurdleDetector : MonoBehaviour
 
                     }
                     Debug.DrawLine(ray.origin, hit.point, Color.green);
-
                 }
-
                 // Optional: Draw green line to hit point
-
             }
             else
             {
@@ -90,5 +81,11 @@ public class HurdleDetector : MonoBehaviour
         {
             metersText.gameObject.SetActive(false);
         }
+    }
+
+
+    private void OnDisable()
+    {
+        metersText.gameObject.SetActive(false);
     }
 }
