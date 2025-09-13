@@ -169323,6 +169323,7 @@ MonoBehaviour:
   transparency_bot_base: 1
   transparency_bot_min: 0.25
   finishPlaceHolder: {fileID: 456}
+  distanceInPlayersAtStart: -3
 --- !u!114 &10105
 MonoBehaviour:
   m_ObjectHideFlags: 0
