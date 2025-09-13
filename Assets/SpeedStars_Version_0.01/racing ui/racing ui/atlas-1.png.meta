@@ -509,11 +509,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atlas-1_19
+      name: crown
       rect:
         serializedVersion: 2
         x: 328
-        y: 52
+        y: 54
         width: 286
         height: 236
       alignment: 0
@@ -739,7 +739,6 @@ TextureImporter:
       atlas-1_15: 2065880503
       atlas-1_17: -549818079
       atlas-1_18: -1902920400
-      atlas-1_19: 1930075838
       atlas-1_2: -927694833
       atlas-1_20: 1726375343
       atlas-1_21: -1555868762
@@ -757,6 +756,7 @@ TextureImporter:
       atlas-1_7: 464416287
       atlas-1_8: -806728734
       atlas-1_9: -1420159785
+      crown: 1930075838
       header: 1523444622
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

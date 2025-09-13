@@ -10,6 +10,8 @@ public class HurdleDetector : MonoBehaviour
     public LayerMask relayLayerMask;
     public Vector3 rayDirection = Vector3.forward;
     public TextMeshPro metersText;
+    public GameObject hurdleIcon;
+    public GameObject relayIcon;
 
     void Update()
     {
@@ -28,11 +30,12 @@ public class HurdleDetector : MonoBehaviour
             {
                 if (GetComponentInParent<PlayerAnimationV2>().isPlayer)
                 {
-                    Debug.Log("Distance to hurdle: " + hit.distance.ToString("F2") + " meters");
+                    Debug.Log(hit.distance.ToString("F2") + " M");
                     if (hit.distance < 10f && hit.distance > 0)
                     {
+                        hurdleIcon.gameObject.SetActive(true);
                         metersText.gameObject.SetActive(true);
-                        metersText.text = "Hurdle In " + hit.distance.ToString("F2") + " Meters";
+                        metersText.text =hit.distance.ToString("F2") + " M";
                     }
                     else
                     {
@@ -59,8 +62,9 @@ public class HurdleDetector : MonoBehaviour
                 {
                     if (hit.distance < 15f && hit.distance > 0)
                     {
+                        relayIcon.gameObject.SetActive(true);
                         metersText.gameObject.SetActive(true);
-                        metersText.text = "Next Leg In " + hit.distance.ToString("F2") + " Meters";
+                        metersText.text = hit.distance.ToString("F2") + " M";
                     }
                     else
                     {

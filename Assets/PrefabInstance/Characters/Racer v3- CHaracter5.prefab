@@ -11722,6 +11722,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DistanceText
       objectReference: {fileID: 0}
+    - target: {fileID: 6606588001977215978, guid: 3a45ec6efcd0e59479d28ce683e62772, type: 3}
+      propertyPath: m_fontSize
+      value: 31.65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11741,6 +11745,16 @@ MonoBehaviour:
 --- !u!224 &5179704245046051484 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2076290492783141771, guid: 3a45ec6efcd0e59479d28ce683e62772, type: 3}
+  m_PrefabInstance: {fileID: 6571445246982463767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6668215291939575029 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 556252660168357346, guid: 3a45ec6efcd0e59479d28ce683e62772, type: 3}
+  m_PrefabInstance: {fileID: 6571445246982463767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9073623408607196386 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2799421238892746229, guid: 3a45ec6efcd0e59479d28ce683e62772, type: 3}
   m_PrefabInstance: {fileID: 6571445246982463767}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6651816684178714887
@@ -11968,6 +11982,14 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 4139489624967000415}
+    - target: {fileID: 8978705006976056401, guid: 41a6cdc3c3fb48b41a41b1a479c98a1d, type: 3}
+      propertyPath: relayIcon
+      value: 
+      objectReference: {fileID: 6668215291939575029}
+    - target: {fileID: 8978705006976056401, guid: 41a6cdc3c3fb48b41a41b1a479c98a1d, type: 3}
+      propertyPath: hurdleIcon
+      value: 
+      objectReference: {fileID: 9073623408607196386}
     - target: {fileID: 8978705006976056401, guid: 41a6cdc3c3fb48b41a41b1a479c98a1d, type: 3}
       propertyPath: metersText
       value: 

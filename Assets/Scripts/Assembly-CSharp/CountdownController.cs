@@ -10,6 +10,7 @@ public class CountdownController : MonoBehaviour
     public GameObject countdownUI;   // Parent UI for countdown
 
     [Header("Countdown Objects")]
+    public GameObject countdownBar;
     public GameObject countdownObjMarks; // "On your marks..."
     public GameObject countdownObjSet;   // "Set"
     public GameObject countdownObjGo;    // "Go"
@@ -55,12 +56,13 @@ public class CountdownController : MonoBehaviour
     private IEnumerator countdownSequence()
     {
         finished = false;
+        countdownBar.SetActive(true);
 
         // MARKS
         state = MARKS;
         countdownObjMarks.SetActive(true);
         // DOTween animation hook for Marks
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.8f);
         countdownObjMarks.SetActive(false);
 
         // Wait for tipsManager if showing (from original script)
@@ -85,6 +87,7 @@ public class CountdownController : MonoBehaviour
         countdownUI.SetActive(false);
         finished = true;
         isRunning = false;
+        countdownBar.SetActive(false);
     }
 
     private void HideAllCountdownObjects()
