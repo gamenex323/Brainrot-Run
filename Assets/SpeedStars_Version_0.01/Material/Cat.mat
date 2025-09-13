@@ -75,17 +75,17 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HSV_S: 3.38
+    - _HSV_S: 4.8
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Offset1: 0
     - _Offset2: 0
-    - _Outline: 7.1
+    - _Outline: 5
     - _Parallax: 0.02
     - _RampSmooth: 0.1
     - _RampSmoothOtherLights: 0.5
-    - _RampThreshold: 0.211
+    - _RampThreshold: 0
     - _RampThresholdOtherLights: 0.5
     - _SketchHalftoneMax: 1
     - _SketchHalftoneMin: 0.2

@@ -232,6 +232,8 @@ public class RaceManager : MonoBehaviour
 
 	public GameObject finishPlaceHolder;
 
+	public float distanceInPlayersAtStart;
+
     private bool uiLeftPressed;
     private bool uiRightPressed;
 
@@ -652,10 +654,12 @@ public class RaceManager : MonoBehaviour
 			num = component2.lane;
 			GameObject gameObject = startingLines_current[num - 1];
 			GameObject gameObject2 = startingBlocks_current[num - 1];
-			obj.transform.position = gameObject.transform.position + gameObject.transform.forward * -0.13f + Vector3.up * Mathf.Pow(num, 0.3f);
+
+            obj.transform.position = gameObject.transform.position
+                         + new Vector3(0f, Mathf.Pow(num, 0.3f), -(num * distanceInPlayersAtStart));
 
 
-			obj.GetComponent<Rigidbody>().isKinematic = true;
+            obj.GetComponent<Rigidbody>().isKinematic = true;
 
             StartCoroutine(DelayKinematicOff(obj.GetComponent<Rigidbody>(), 0.2f));
 

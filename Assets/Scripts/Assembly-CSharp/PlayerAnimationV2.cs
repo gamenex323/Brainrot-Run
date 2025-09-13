@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
@@ -350,6 +351,12 @@ public class PlayerAnimationV2 : MonoBehaviour
             relayObject.SetActive(false);
         }
 
+        //Set Start Pos
+        DOVirtual.DelayedCall(2f, () =>
+        {
+            transform.position = new Vector3(transform.localPosition.x, transform.localPosition.y,
+            transform.localPosition.z + (transform.GetSiblingIndex() * 4f));
+        });
 
 
 
