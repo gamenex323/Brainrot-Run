@@ -403,6 +403,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: relay
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 1000
+        width: 118
+        height: 92
+      alignment: 9
+      pivot: {x: 1.7506429, y: 0.7471641}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e7d8511b66b02140bff13969272a0f7
+      internalID: -902267742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -428,6 +449,7 @@ TextureImporter:
       atlas-3_9: 22152143
       hurdleIcon: -1628100079
       onYouMark: 1480257611
+      relay: -902267742
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
