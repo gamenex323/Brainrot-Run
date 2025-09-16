@@ -30,7 +30,7 @@ public class HurdleDetector : MonoBehaviour
             {
                 if (GetComponentInParent<PlayerAnimationV2>().isPlayer)
                 {
-                    Debug.Log(hit.distance.ToString("F2") + " M");
+                    //Debug.Log(hit.distance.ToString("F2") + " M");
                     if (hit.distance < 10f && hit.distance > 0)
                     {
                         hurdleIcon.gameObject.SetActive(true);

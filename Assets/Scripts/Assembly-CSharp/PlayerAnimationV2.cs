@@ -808,14 +808,34 @@ public class PlayerAnimationV2 : MonoBehaviour
                 {
                     flag = true;
                     leanWeight += 0.009666667f;
+                    print("Rotate In Array");
                     root.Rotate(Vector3.right * 23f * (1f / 60f), Space.Self);
                     zTilt += 0.38333336f;
                 }
             }
             if (!flag)
             {
+                print("Rotate In Flag");
+
                 leanWeight -= 0.020000001f;
-                root.Rotate(Vector3.left * 47f * (1f / 60f), Space.Self);
+                if (!reachedMaxRotation)
+                {
+                    root.Rotate(Vector3.left * 47f * (1f / 60f), Space.Self);
+
+                }
+                else
+                {
+                    zTilt = -45f;
+                    root.localEulerAngles = new Vector3(-69.459f,0f,0f);
+                    //print("Cool Down Rotation");
+                    //root.Rotate(Vector3.left * 150f * (1f / 60f), Space.Self);
+                    rotationSpeedCooldownTimeInterval -= Time.deltaTime;
+                    if (rotationSpeedCooldownTimeInterval <= 0)
+                    {
+                        reachedMaxRotation = false;
+                        rotationSpeedCooldownTimeInterval = rotationSpeedCooldownTime;
+                    }
+                }
                 zTilt -= 47f / 60f;
             }
         }
@@ -834,13 +854,24 @@ public class PlayerAnimationV2 : MonoBehaviour
         {
             root.Rotate(Vector3.left * (zTilt - 45f), Space.Self);
             zTilt = 45f;
+            print("Max ROtaion");
+            reachedMaxRotation = true;
         }
         else if (zTilt < -45f)
         {
             root.Rotate(Vector3.left * (zTilt + 45f), Space.Self);
             zTilt = -45f;
+            print("Min ROtaion");
+
         }
+
+        // ROtation Cool Down
+
     }
+
+    private float rotationSpeedCooldownTime = 1f;
+    private float rotationSpeedCooldownTimeInterval = 1f;
+    private bool reachedMaxRotation = false;
 
     public void turnTowardsY(float y)
     {
