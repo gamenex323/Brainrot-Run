@@ -11918,15 +11918,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1451846894302106013, guid: 41c229998c6537041bf75f237d188456, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.016892
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1451846894302106013, guid: 41c229998c6537041bf75f237d188456, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.33976
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1451846894302106013, guid: 41c229998c6537041bf75f237d188456, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.034297
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1451846894302106013, guid: 41c229998c6537041bf75f237d188456, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12022,8 +12022,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.582441, z: 0.6033918}
-  m_Center: {x: -0.000000097661804, y: -0.29122034, z: 0.19830438}
+  m_Size: {x: 1, y: 1.582441, z: 0.22187082}
+  m_Center: {x: -0.00000006638068, y: -0.2912205, z: 0.0075432016}
 --- !u!95 &4641731984065499463 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2000180913281190845, guid: 41c229998c6537041bf75f237d188456, type: 3}
@@ -12058,8 +12058,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.582441, z: 0.6033918}
-  m_Center: {x: -0.000000097661804, y: -0.29122034, z: 0.19830438}
+  m_Size: {x: 1, y: 1.5824407, z: 0.1761976}
+  m_Center: {x: -0.00000009270689, y: -0.2912203, z: -0.015293195}
 --- !u!4 &8497422077876171577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3333867754853870019, guid: 41c229998c6537041bf75f237d188456, type: 3}

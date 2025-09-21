@@ -854,14 +854,14 @@ public class PlayerAnimationV2 : MonoBehaviour
         {
             root.Rotate(Vector3.left * (zTilt - 45f), Space.Self);
             zTilt = 45f;
-            print("Max ROtaion");
+//            print("Max ROtaion");
             reachedMaxRotation = true;
         }
         else if (zTilt < -45f)
         {
             root.Rotate(Vector3.left * (zTilt + 45f), Space.Self);
             zTilt = -45f;
-            print("Min ROtaion");
+  //          print("Min ROtaion");
 
         }
 
