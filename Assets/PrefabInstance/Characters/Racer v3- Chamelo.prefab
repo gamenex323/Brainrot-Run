@@ -11019,6 +11019,7 @@ MonoBehaviour:
   cruiseWeight: 0
   localXPos: 0
   relayLegsDistance: 40
+  canRotateOnMaxRotation: 0
 --- !u!114 &4596882315659769784
 MonoBehaviour:
   m_ObjectHideFlags: 0

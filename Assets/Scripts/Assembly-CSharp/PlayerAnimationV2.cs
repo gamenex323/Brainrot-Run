@@ -788,6 +788,8 @@ public class PlayerAnimationV2 : MonoBehaviour
     //    }
     //}
 
+    public bool canRotateOnMaxRotation = true;
+
     private void adjustRotation()
     {
         if (!leans)
@@ -855,7 +857,8 @@ public class PlayerAnimationV2 : MonoBehaviour
             root.Rotate(Vector3.left * (zTilt - 45f), Space.Self);
             zTilt = 45f;
 //            print("Max ROtaion");
-            reachedMaxRotation = true;
+            if(canRotateOnMaxRotation)
+                reachedMaxRotation = true;
         }
         else if (zTilt < -45f)
         {

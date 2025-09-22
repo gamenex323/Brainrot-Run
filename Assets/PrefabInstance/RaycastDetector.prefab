@@ -100,9 +100,11 @@ MonoBehaviour:
   rayDistance: 100
   hurdleLayerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   relayLayerMask:
     serializedVersion: 2
-    m_Bits: 131072
+    m_Bits: 0
   rayDirection: {x: 0, y: 0, z: 1}
   metersText: {fileID: 0}
+  hurdleIcon: {fileID: 0}
+  relayIcon: {fileID: 0}
